@@ -116,3 +116,7 @@ Full report: `results/TUNING.md` (Antigravity only, no Codex, no code changes, p
 - **Why it failed:** the P1 optima (short EMA 20, wide channels 2.5–3.0) filtered false breakouts in the 2021–2023 bull/bear mix, but in the 2024–2026 ETF bull market they entered too late and exited too early on ETH. The defaults (EMA 35, multiplier 2.0) are the more robust middle-of-the-road filter across regimes.
 - **Step 3 was correctly not run:** zero variants passed P2, so no SOL/BNB confirmation runs were made. RSI tuning is additionally weak statistically (P1 default only 43 BTC / 35 ETH trades; R1 only 26/22).
 - **Standing configuration:** keltner_breakout (ema_period=35, atr_period=17, multiplier=2, stop_atr=2) and rsi_atr_trend_4h (period=14, upper=70, lower=30, fast=100, slow=200, stop_atr=1.5) remain the defaults, and the c_sharpe portfolio weights are unchanged.
+
+## Final Summary (2026-11-09)
+
+The full research story is consolidated in `results/FINAL.md` (263 lines): the research question and "good strategy" definition, the 12-strategy full-period table, validation verdicts (3 hold up, 4 luck/regime, MACD/J Law/mean-reversion dead, buy-and-hold liquidated -100% on BTC/ETH/SOL), portfolio results (c_sharpe recommended), tuning outcome (all 5 candidates failed out-of-sample, defaults stand), the final configuration, honest limitations (full-history selection bias, no true forward test yet, capital-split/no-shared-margin assumption), and next steps (funding-rate round). All numbers in it were checked against the archived reports and summary CSVs.
