@@ -1,0 +1,14 @@
+Binance REST API error (binanceusdm GET https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=4h&startTime=1609459200000&endTime=1794095999999&limit=1500 451  {
+  "code": 0,
+  "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error."
+}); falling back to Binance Vision bulk download...
+ETH/USDT perpetual | 12822 closed bars | 2021-01-01 00:00:00+00:00 through 2026-11-07 20:00:00+00:00 | 6390 funding events
+                    total_return    cagr  sharpe  max_drawdown  win_rate  profit_factor  trade_count  average_holding_days  total_funding  liquidations
+turtle_donchian_4h        0.2225  0.0349  0.3045       -0.2106    0.2686         1.0926     376.0000                3.7677      -762.5951        0.0000
+supertrend_4h             0.2107  0.0332  0.3495       -0.1156    0.3117         1.1195     324.0000                6.5905      -611.5556        0.0000
+rsi_atr_trend_4h          0.6296  0.0870  0.5262       -0.3906    0.2206         1.9214      68.0000               15.3505     -1017.7325        0.0000
+bollinger_breakout        0.0983  0.0162  0.1853       -0.2485    0.2822         1.0376     489.0000                2.3528      -591.8921        0.0000
+keltner_breakout          0.3734  0.0557  0.4807       -0.1649    0.3245         1.2073     265.0000                4.0849      -742.8719        0.0000
+macd_ema_trend            0.6139  0.0853  0.6281       -0.2580    0.3433         1.1027    1075.0000                1.8750      -578.8637        0.0000
+buy_and_hold             -1.0000 -1.0000 -0.3910       -1.0000    0.0000         0.0000       1.0000              533.8333    -11914.7640        1.0000
+Returns/drawdowns/win rates are fractions; total_funding is signed USDT cash flow (+ earned).

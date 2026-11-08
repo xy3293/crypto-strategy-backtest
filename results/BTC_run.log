@@ -1,0 +1,14 @@
+Binance REST API error (binanceusdm GET https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=4h&startTime=1609459200000&endTime=1794095999999&limit=1500 451  {
+  "code": 0,
+  "msg": "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received this message in error."
+}); falling back to Binance Vision bulk download...
+BTC/USDT perpetual | 12822 closed bars | 2021-01-01 00:00:00+00:00 through 2026-11-07 20:00:00+00:00 | 6390 funding events
+                    total_return    cagr  sharpe  max_drawdown  win_rate  profit_factor  trade_count  average_holding_days  total_funding  liquidations
+turtle_donchian_4h        0.4424  0.0646  0.4946       -0.2152    0.3027         1.1583     370.0000                3.6662      -612.2649        0.0000
+supertrend_4h             0.3146  0.0479  0.4741       -0.1277    0.3413         1.1670     334.0000                6.3932      -410.3972        0.0000
+rsi_atr_trend_4h          0.2494  0.0388  0.3155       -0.2439    0.1829         1.3228      82.0000               12.0102     -1125.8485        0.0000
+bollinger_breakout        0.6014  0.0838  0.6352       -0.2395    0.3312         1.1825     471.0000                2.4855      -541.5064        0.0000
+keltner_breakout          0.6931  0.0942  0.7173       -0.1345    0.3148         1.3122     270.0000                4.1253      -772.2135        0.0000
+macd_ema_trend           -0.1910 -0.0356 -0.1747       -0.3224    0.3215         0.9578    1067.0000                1.8882      -367.2133        0.0000
+buy_and_hold             -1.0000 -1.0000 -0.2249       -1.0000    0.0000         0.0000       1.0000              677.6667     -5657.9629        1.0000
+Returns/drawdowns/win rates are fractions; total_funding is signed USDT cash flow (+ earned).
