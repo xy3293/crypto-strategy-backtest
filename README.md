@@ -233,6 +233,22 @@ single strategy (supertrend) it only improves on BTC (-10.60% vs -12.77%) and is
 deeper on ETH/SOL/BNB. Diversification works because rsi_atr is the low-correlation
 leg (0.26–0.49 vs the other two) while keltner and supertrend move together (0.76–0.87).
 
+## Parameter tuning with out-of-sample validation (2026-11-09)
+
+Full report: `results/TUNING.md`. Only the two validated winners were tuned, with a
+strict one-touch rule: select on 2021–2023 (P1), validate once on 2024–2026 (P2),
+no re-tuning on P2. **Result: all 5 candidates failed out-of-sample — default
+parameters stay.** Keltner grid 36 combos (multiplier 1.5–3 × EMA 20/35/50 × ATR
+14/17/21); RSI grid 9 combos (stop 1.0–2.0 × period 10/14/21). P1 winners were all
+EMA 20 with wide channels (K1 mult 3.0/ema 20/atr 21, Sharpe sum 2.0894 vs default
+1.1948), but on P2 they lost 10–23pp of return, mostly on ETH (K1 ETH -15.79pp).
+The closest miss was RSI R2 (stop 1.0, period 10): P2 return sum +41.45pp over
+default (ETH +95.66%) but Sharpe sum -0.0043 short and drawdown 13.21pp deeper on
+BTC (-29.28% vs -16.07%) — a miss is a miss. No variant qualified for cross-market
+confirmation, so step 3 was correctly not run. Lesson: the in-sample optima were
+overfit to the 2021–2023 bull/bear mix; the defaults are the more robust,
+middle-of-the-road filter across regimes.
+
 ## Risk disclaimer
 
 Leverage and funding can erase paper profits. Gaps can exceed planned stop risk;

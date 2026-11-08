@@ -1,0 +1,117 @@
+=== P1 Parameter Selection Grid Log ===
+=== RUNNING SANITY CHECK DEFAULTS ===
+Sanity run: keltner_breakout on BTC/USDT (variant=default, params={'multiplier': 2.0, 'ema_period': 35, 'atr_period': 17, 'stop_atr': 2.0})
+  Result: return=0.4845 (exp 0.4845), sharpe=1.0070 (exp 1.0070), maxdd=-0.1057 (exp -0.1057), trades=130 (exp 130)
+  Sanity check PASSED for keltner_breakout on BTC/USDT
+Sanity run: keltner_breakout on ETH/USDT (variant=default, params={'multiplier': 2.0, 'ema_period': 35, 'atr_period': 17, 'stop_atr': 2.0})
+  Result: return=0.0481 (exp 0.0481), sharpe=0.1878 (exp 0.1878), maxdd=-0.1171 (exp -0.1171), trades=136 (exp 136)
+  Sanity check PASSED for keltner_breakout on ETH/USDT
+Sanity run: rsi_atr_trend_4h on BTC/USDT (variant=default, params={'stop_atr': 1.5, 'period': 14, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200})
+  Result: return=0.1220 (exp 0.1220), sharpe=0.3307 (exp 0.3307), maxdd=-0.2439 (exp -0.2439), trades=43 (exp 43)
+  Sanity check PASSED for rsi_atr_trend_4h on BTC/USDT
+Sanity run: rsi_atr_trend_4h on ETH/USDT (variant=default, params={'stop_atr': 1.5, 'period': 14, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200})
+  Result: return=0.0395 (exp 0.0395), sharpe=0.1689 (exp 0.1689), maxdd=-0.3906 (exp -0.3906), trades=35 (exp 35)
+  Sanity check PASSED for rsi_atr_trend_4h on ETH/USDT
+=== SANITY CHECK DEFAULTS PASSED SUCCESSFULLY ===
+
+=== STARTING KELTNER BREAKOUT GRID (36 combos) ===
+[1/36] Keltner combo: multiplier=2.0, ema_period=35, atr_period=17, stop_atr=2.0 (variant=default)
+  BTC/USDT using sanity default run metrics
+  ETH/USDT using sanity default run metrics
+  -> btc_ret=0.4845, eth_ret=0.0481, sharpe_sum=1.1948, return_sum=0.5326, eligible=YES
+[2/36] Keltner combo: multiplier=1.5, ema_period=20, atr_period=14, stop_atr=2.0 (variant=m1.5_e20_a14)
+  -> btc_ret=0.3213, eth_ret=0.1413, sharpe_sum=1.1694, return_sum=0.4626, eligible=YES
+[3/36] Keltner combo: multiplier=1.5, ema_period=20, atr_period=17, stop_atr=2.0 (variant=m1.5_e20_a17)
+  -> btc_ret=0.2524, eth_ret=0.0851, sharpe_sum=0.9143, return_sum=0.3375, eligible=YES
+[4/36] Keltner combo: multiplier=1.5, ema_period=20, atr_period=21, stop_atr=2.0 (variant=m1.5_e20_a21)
+  -> btc_ret=0.2703, eth_ret=0.1000, sharpe_sum=0.9887, return_sum=0.3703, eligible=YES
+[5/36] Keltner combo: multiplier=1.5, ema_period=35, atr_period=14, stop_atr=2.0 (variant=m1.5_e35_a14)
+  -> btc_ret=0.3042, eth_ret=-0.0176, sharpe_sum=0.7117, return_sum=0.2866, eligible=YES
+[6/36] Keltner combo: multiplier=1.5, ema_period=35, atr_period=17, stop_atr=2.0 (variant=m1.5_e35_a17)
+  -> btc_ret=0.3901, eth_ret=0.0155, sharpe_sum=0.9349, return_sum=0.4056, eligible=YES
+[7/36] Keltner combo: multiplier=1.5, ema_period=35, atr_period=21, stop_atr=2.0 (variant=m1.5_e35_a21)
+  -> btc_ret=0.4611, eth_ret=-0.0269, sharpe_sum=0.9400, return_sum=0.4342, eligible=YES
+[8/36] Keltner combo: multiplier=1.5, ema_period=50, atr_period=14, stop_atr=2.0 (variant=m1.5_e50_a14)
+  -> btc_ret=0.3441, eth_ret=0.0545, sharpe_sum=0.9136, return_sum=0.3985, eligible=YES
+[9/36] Keltner combo: multiplier=1.5, ema_period=50, atr_period=17, stop_atr=2.0 (variant=m1.5_e50_a17)
+  -> btc_ret=0.3751, eth_ret=0.0458, sharpe_sum=0.9433, return_sum=0.4209, eligible=YES
+[10/36] Keltner combo: multiplier=1.5, ema_period=50, atr_period=21, stop_atr=2.0 (variant=m1.5_e50_a21)
+  -> btc_ret=0.4132, eth_ret=0.0310, sharpe_sum=0.9679, return_sum=0.4442, eligible=YES
+[11/36] Keltner combo: multiplier=2.0, ema_period=20, atr_period=14, stop_atr=2.0 (variant=m2.0_e20_a14)
+  -> btc_ret=0.3345, eth_ret=0.2783, sharpe_sum=1.6792, return_sum=0.6128, eligible=YES
+[12/36] Keltner combo: multiplier=2.0, ema_period=20, atr_period=17, stop_atr=2.0 (variant=m2.0_e20_a17)
+  -> btc_ret=0.3577, eth_ret=0.3184, sharpe_sum=1.7981, return_sum=0.6761, eligible=YES
+[13/36] Keltner combo: multiplier=2.0, ema_period=20, atr_period=21, stop_atr=2.0 (variant=m2.0_e20_a21)
+  -> btc_ret=0.3761, eth_ret=0.3202, sharpe_sum=1.8225, return_sum=0.6964, eligible=YES
+[14/36] Keltner combo: multiplier=2.0, ema_period=35, atr_period=14, stop_atr=2.0 (variant=m2.0_e35_a14)
+  -> btc_ret=0.4027, eth_ret=0.0030, sharpe_sum=0.9489, return_sum=0.4057, eligible=YES
+[15/36] Keltner combo: multiplier=2.0, ema_period=35, atr_period=21, stop_atr=2.0 (variant=m2.0_e35_a21)
+  -> btc_ret=0.5788, eth_ret=0.0805, sharpe_sum=1.4127, return_sum=0.6593, eligible=YES
+[16/36] Keltner combo: multiplier=2.0, ema_period=50, atr_period=14, stop_atr=2.0 (variant=m2.0_e50_a14)
+  -> btc_ret=0.6265, eth_ret=0.0364, sharpe_sum=1.2802, return_sum=0.6629, eligible=YES
+[17/36] Keltner combo: multiplier=2.0, ema_period=50, atr_period=17, stop_atr=2.0 (variant=m2.0_e50_a17)
+  -> btc_ret=0.6130, eth_ret=0.0371, sharpe_sum=1.2657, return_sum=0.6501, eligible=YES
+[18/36] Keltner combo: multiplier=2.0, ema_period=50, atr_period=21, stop_atr=2.0 (variant=m2.0_e50_a21)
+  -> btc_ret=0.6300, eth_ret=0.0521, sharpe_sum=1.3296, return_sum=0.6821, eligible=YES
+[19/36] Keltner combo: multiplier=2.5, ema_period=20, atr_period=14, stop_atr=2.0 (variant=m2.5_e20_a14)
+  -> btc_ret=0.4495, eth_ret=0.2765, sharpe_sum=2.0847, return_sum=0.7260, eligible=YES
+[20/36] Keltner combo: multiplier=2.5, ema_period=20, atr_period=17, stop_atr=2.0 (variant=m2.5_e20_a17)
+  -> btc_ret=0.4072, eth_ret=0.2224, sharpe_sum=1.8250, return_sum=0.6296, eligible=YES
+[21/36] Keltner combo: multiplier=2.5, ema_period=20, atr_period=21, stop_atr=2.0 (variant=m2.5_e20_a21)
+  -> btc_ret=0.4484, eth_ret=0.2182, sharpe_sum=1.8767, return_sum=0.6666, eligible=YES
+[22/36] Keltner combo: multiplier=2.5, ema_period=35, atr_period=14, stop_atr=2.0 (variant=m2.5_e35_a14)
+  -> btc_ret=0.5511, eth_ret=0.1479, sharpe_sum=1.6481, return_sum=0.6990, eligible=YES
+[23/36] Keltner combo: multiplier=2.5, ema_period=35, atr_period=17, stop_atr=2.0 (variant=m2.5_e35_a17)
+  -> btc_ret=0.6019, eth_ret=0.1760, sharpe_sum=1.7863, return_sum=0.7778, eligible=YES
+[24/36] Keltner combo: multiplier=2.5, ema_period=35, atr_period=21, stop_atr=2.0 (variant=m2.5_e35_a21)
+  -> btc_ret=0.5922, eth_ret=0.1857, sharpe_sum=1.7858, return_sum=0.7779, eligible=YES
+[25/36] Keltner combo: multiplier=2.5, ema_period=50, atr_period=14, stop_atr=2.0 (variant=m2.5_e50_a14)
+  -> btc_ret=0.3315, eth_ret=0.0446, sharpe_sum=0.9420, return_sum=0.3760, eligible=YES
+[26/36] Keltner combo: multiplier=2.5, ema_period=50, atr_period=17, stop_atr=2.0 (variant=m2.5_e50_a17)
+  -> btc_ret=0.3544, eth_ret=0.0853, sharpe_sum=1.0710, return_sum=0.4397, eligible=YES
+[27/36] Keltner combo: multiplier=2.5, ema_period=50, atr_period=21, stop_atr=2.0 (variant=m2.5_e50_a21)
+  -> btc_ret=0.3964, eth_ret=0.0848, sharpe_sum=1.1293, return_sum=0.4812, eligible=YES
+[28/36] Keltner combo: multiplier=3.0, ema_period=20, atr_period=14, stop_atr=2.0 (variant=m3.0_e20_a14)
+  -> btc_ret=0.4385, eth_ret=0.1213, sharpe_sum=2.0335, return_sum=0.5599, eligible=YES
+[29/36] Keltner combo: multiplier=3.0, ema_period=20, atr_period=17, stop_atr=2.0 (variant=m3.0_e20_a17)
+  -> btc_ret=0.4350, eth_ret=0.1101, sharpe_sum=1.8974, return_sum=0.5451, eligible=YES
+[30/36] Keltner combo: multiplier=3.0, ema_period=20, atr_period=21, stop_atr=2.0 (variant=m3.0_e20_a21)
+  -> btc_ret=0.4585, eth_ret=0.1687, sharpe_sum=2.0894, return_sum=0.6272, eligible=YES
+[31/36] Keltner combo: multiplier=3.0, ema_period=35, atr_period=14, stop_atr=2.0 (variant=m3.0_e35_a14)
+  -> btc_ret=0.4706, eth_ret=0.1276, sharpe_sum=1.5861, return_sum=0.5983, eligible=YES
+[32/36] Keltner combo: multiplier=3.0, ema_period=35, atr_period=17, stop_atr=2.0 (variant=m3.0_e35_a17)
+  -> btc_ret=0.5062, eth_ret=0.0913, sharpe_sum=1.5221, return_sum=0.5975, eligible=YES
+[33/36] Keltner combo: multiplier=3.0, ema_period=35, atr_period=21, stop_atr=2.0 (variant=m3.0_e35_a21)
+  -> btc_ret=0.5478, eth_ret=0.1224, sharpe_sum=1.6465, return_sum=0.6701, eligible=YES
+[34/36] Keltner combo: multiplier=3.0, ema_period=50, atr_period=14, stop_atr=2.0 (variant=m3.0_e50_a14)
+  -> btc_ret=0.5404, eth_ret=0.0467, sharpe_sum=1.3861, return_sum=0.5871, eligible=YES
+[35/36] Keltner combo: multiplier=3.0, ema_period=50, atr_period=17, stop_atr=2.0 (variant=m3.0_e50_a17)
+  -> btc_ret=0.6484, eth_ret=0.0865, sharpe_sum=1.6147, return_sum=0.7350, eligible=YES
+[36/36] Keltner combo: multiplier=3.0, ema_period=50, atr_period=21, stop_atr=2.0 (variant=m3.0_e50_a21)
+  -> btc_ret=0.6699, eth_ret=0.0609, sharpe_sum=1.5681, return_sum=0.7308, eligible=YES
+Saved sorted Keltner grid to /home/hatch/workspace/crypto-strategy-backtest/results/keltner_tuning_grid.csv (36 rows)
+
+=== STARTING RSI ATR TREND GRID (9 combos) ===
+[1/9] RSI combo: stop_atr=1.5, period=14 (variant=default)
+  BTC/USDT using sanity default run metrics
+  ETH/USDT using sanity default run metrics
+  -> btc_ret=0.1220, eth_ret=0.0395, sharpe_sum=0.4996, return_sum=0.1616
+[2/9] RSI combo: stop_atr=1.0, period=10 (variant=s1.0_p10)
+  -> btc_ret=0.3421, eth_ret=-0.1407, sharpe_sum=0.5144, return_sum=0.2015
+[3/9] RSI combo: stop_atr=1.0, period=14 (variant=s1.0_p14)
+  -> btc_ret=0.0335, eth_ret=-0.0667, sharpe_sum=0.1997, return_sum=-0.0332
+[4/9] RSI combo: stop_atr=1.0, period=21 (variant=s1.0_p21)
+  -> btc_ret=0.1668, eth_ret=-0.0896, sharpe_sum=0.3183, return_sum=0.0772
+[5/9] RSI combo: stop_atr=1.5, period=10 (variant=s1.5_p10)
+  -> btc_ret=0.2089, eth_ret=-0.0829, sharpe_sum=0.4300, return_sum=0.1259
+[6/9] RSI combo: stop_atr=1.5, period=21 (variant=s1.5_p21)
+  -> btc_ret=0.0461, eth_ret=0.1511, sharpe_sum=0.5790, return_sum=0.1972
+[7/9] RSI combo: stop_atr=2.0, period=10 (variant=s2.0_p10)
+  -> btc_ret=-0.0088, eth_ret=0.0163, sharpe_sum=0.1579, return_sum=0.0075
+[8/9] RSI combo: stop_atr=2.0, period=14 (variant=s2.0_p14)
+  -> btc_ret=0.0434, eth_ret=0.0782, sharpe_sum=0.4158, return_sum=0.1216
+[9/9] RSI combo: stop_atr=2.0, period=21 (variant=s2.0_p21)
+  -> btc_ret=-0.0103, eth_ret=0.0721, sharpe_sum=0.2398, return_sum=0.0618
+Saved sorted RSI grid to /home/hatch/workspace/crypto-strategy-backtest/results/rsi_atr_tuning_grid.csv (9 rows)
+
+=== ALL P1 GRID RUNS COMPLETED SUCCESSFULLY ===

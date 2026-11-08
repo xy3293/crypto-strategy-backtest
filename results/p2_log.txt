@@ -1,0 +1,152 @@
+=== P2 OUT-OF-SAMPLE VALIDATION LOG ===
+Verified backup directory /home/hatch/workspace/crypto-strategy-backtest/results/backup_validation_20261109 contains 168 files (must be 168).
+
+--- STEP A: RUNNING DEFAULTS AND CHECKING BENCHMARKS ---
+
+[Default Run] keltner_breakout K-default on BTC/USDT with params {'multiplier': 2, 'ema_period': 35, 'atr_period': 17, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 2, "ema_period": 35, "atr_period": 17, "stop_atr": 2}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.0_e35_a17_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.0_e35_a17_trades.csv
+Sanity check for keltner_breakout on BTC/USDT:
+  Observed: return=0.1537, sharpe=0.4354, maxdd=-0.1345, trades=139
+  Expected: return=0.1537, sharpe=0.4354, maxdd=-0.1345, trades=139
+  Diffs: return_diff=0.0000 (<=0.005), sharpe_diff=0.0000 (<=0.02), maxdd_diff=0.0000 (<=0.005), trade_diff=0 (<=2)
+Sanity check PASSED for keltner_breakout on BTC/USDT.
+
+
+[Default Run] keltner_breakout K-default on ETH/USDT with params {'multiplier': 2, 'ema_period': 35, 'atr_period': 17, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 2, "ema_period": 35, "atr_period": 17, "stop_atr": 2}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.0_e35_a17_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.0_e35_a17_trades.csv
+Sanity check for keltner_breakout on ETH/USDT:
+  Observed: return=0.3333, sharpe=0.8120, maxdd=-0.1649, trades=127
+  Expected: return=0.3333, sharpe=0.8120, maxdd=-0.1649, trades=127
+  Diffs: return_diff=0.0000 (<=0.005), sharpe_diff=0.0000 (<=0.02), maxdd_diff=0.0000 (<=0.005), trade_diff=0 (<=2)
+Sanity check PASSED for keltner_breakout on ETH/USDT.
+
+
+[Default Run] rsi_atr_trend_4h R-default on BTC/USDT with params {'stop_atr': 1.5, 'period': 14, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.5, "period": 14, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p14_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p14_trades.csv
+Sanity check for rsi_atr_trend_4h on BTC/USDT:
+  Observed: return=0.2050, sharpe=0.4848, maxdd=-0.1607, trades=39
+  Expected: return=0.2050, sharpe=0.4848, maxdd=-0.1607, trades=39
+  Diffs: return_diff=0.0000 (<=0.005), sharpe_diff=0.0000 (<=0.02), maxdd_diff=0.0000 (<=0.005), trade_diff=0 (<=2)
+Sanity check PASSED for rsi_atr_trend_4h on BTC/USDT.
+
+
+[Default Run] rsi_atr_trend_4h R-default on ETH/USDT with params {'stop_atr': 1.5, 'period': 14, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.5, "period": 14, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p14_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p14_trades.csv
+Sanity check for rsi_atr_trend_4h on ETH/USDT:
+  Observed: return=0.6032, sharpe=1.0164, maxdd=-0.1310, trades=31
+  Expected: return=0.6032, sharpe=1.0164, maxdd=-0.1310, trades=31
+  Diffs: return_diff=0.0000 (<=0.005), sharpe_diff=0.0000 (<=0.02), maxdd_diff=0.0000 (<=0.005), trade_diff=0 (<=2)
+Sanity check PASSED for rsi_atr_trend_4h on ETH/USDT.
+
+
+--- STEP B: RUNNING TUNED VARIANTS (10 runs) ---
+
+[Tuned Run] keltner_breakout K1 on BTC/USDT with params {'multiplier': 3.0, 'ema_period': 20, 'atr_period': 21, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 3.0, "ema_period": 20, "atr_period": 21, "stop_atr": 2}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a21_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a21_trades.csv
+  Result: return=0.1632 (diff=+0.95pp), sharpe=0.6712 (diff=+0.2358), maxdd=-0.1249 (diff=+0.96pp), trades=54
+
+[Tuned Run] keltner_breakout K1 on ETH/USDT with params {'multiplier': 3.0, 'ema_period': 20, 'atr_period': 21, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 3.0, "ema_period": 20, "atr_period": 21, "stop_atr": 2}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a21_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a21_trades.csv
+  Result: return=0.1754 (diff=-15.79pp), sharpe=0.6976 (diff=-0.1144), maxdd=-0.0623 (diff=+10.26pp), trades=61
+
+[Tuned Run] keltner_breakout K2 on BTC/USDT with params {'multiplier': 2.5, 'ema_period': 20, 'atr_period': 14, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 2.5, "ema_period": 20, "atr_period": 14, "stop_atr": 2}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.5_e20_a14_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.5_e20_a14_trades.csv
+  Result: return=0.1680 (diff=+1.42pp), sharpe=0.5802 (diff=+0.1448), maxdd=-0.1627 (diff=-2.82pp), trades=84
+
+[Tuned Run] keltner_breakout K2 on ETH/USDT with params {'multiplier': 2.5, 'ema_period': 20, 'atr_period': 14, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 2.5, "ema_period": 20, "atr_period": 14, "stop_atr": 2}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.5_e20_a14_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m2.5_e20_a14_trades.csv
+  Result: return=0.2170 (diff=-11.63pp), sharpe=0.7498 (diff=-0.0622), maxdd=-0.0811 (diff=+8.38pp), trades=88
+
+[Tuned Run] keltner_breakout K3 on BTC/USDT with params {'multiplier': 3.0, 'ema_period': 20, 'atr_period': 14, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 3.0, "ema_period": 20, "atr_period": 14, "stop_atr": 2}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a14_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a14_trades.csv
+  Result: return=0.1298 (diff=-2.39pp), sharpe=0.5844 (diff=+0.1490), maxdd=-0.1420 (diff=-0.75pp), trades=50
+
+[Tuned Run] keltner_breakout K3 on ETH/USDT with params {'multiplier': 3.0, 'ema_period': 20, 'atr_period': 14, 'stop_atr': 2}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy keltner_breakout --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"multiplier": 3.0, "ema_period": 20, "atr_period": 14, "stop_atr": 2}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a14_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_keltner_breakout_m3.0_e20_a14_trades.csv
+  Result: return=0.1290 (diff=-20.43pp), sharpe=0.5996 (diff=-0.2124), maxdd=-0.0673 (diff=+9.76pp), trades=56
+
+[Tuned Run] rsi_atr_trend_4h R1 on BTC/USDT with params {'stop_atr': 1.5, 'period': 21, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.5, "period": 21, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p21_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p21_trades.csv
+  Result: return=0.1320 (diff=-7.30pp), sharpe=0.3815 (diff=-0.1033), maxdd=-0.1367 (diff=+2.40pp), trades=25
+
+[Tuned Run] rsi_atr_trend_4h R1 on ETH/USDT with params {'stop_atr': 1.5, 'period': 21, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.5, "period": 21, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p21_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.5_p21_trades.csv
+  Result: return=0.4551 (diff=-14.81pp), sharpe=0.8626 (diff=-0.1538), maxdd=-0.1321 (diff=-0.11pp), trades=23
+
+[Tuned Run] rsi_atr_trend_4h R2 on BTC/USDT with params {'stop_atr': 1.0, 'period': 10, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol BTC/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.0, "period": 10, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.0_p10_equity.csv and BTCUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.0_p10_trades.csv
+  Result: return=0.2661 (diff=+6.11pp), sharpe=0.4457 (diff=-0.0391), maxdd=-0.2928 (diff=-13.21pp), trades=67
+
+[Tuned Run] rsi_atr_trend_4h R2 on ETH/USDT with params {'stop_atr': 1.0, 'period': 10, 'upper': 70, 'lower': 30, 'fast': 100, 'slow': 200}
+Executing: /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python -m backtest run --symbol ETH/USDT --strategy rsi_atr_trend_4h --timeframe 4h --start 2024-01-01 --end 2026-11-08 --params {"stop_atr": 1.0, "period": 10, "upper": 70, "lower": 30, "fast": 100, "slow": 200}
+Renamed -> ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.0_p10_equity.csv and ETHUSDT_4h_2024-01-01_2026-11-08_rsi_atr_trend_4h_s1.0_p10_trades.csv
+  Result: return=0.9566 (diff=+35.34pp), sharpe=1.0512 (diff=+0.0348), maxdd=-0.2127 (diff=-8.17pp), trades=47
+
+Wrote results to /home/hatch/workspace/crypto-strategy-backtest/results/p2_validation.csv (14 rows).
+
+=== SECTION 6: VERDICTS ===
+Variant K1 (keltner_breakout): FAIL
+  (a) sharpe_sum diff: +0.1215 (pass=True) [var=1.3688, def=1.2474]
+  (b) return_sum diff: -14.84pp (pass=False) [var=33.86%, def=48.70%]
+  (c) worst per-coin return diff: -15.79pp on ETH (pass=False, threshold >= -5.00pp)
+  (d) worst per-coin maxdd diff: +0.96pp on BTC (pass=True, threshold >= -5.00pp)
+Variant K2 (keltner_breakout): FAIL
+  (a) sharpe_sum diff: +0.0826 (pass=True) [var=1.3300, def=1.2474]
+  (b) return_sum diff: -10.20pp (pass=False) [var=38.50%, def=48.70%]
+  (c) worst per-coin return diff: -11.63pp on ETH (pass=False, threshold >= -5.00pp)
+  (d) worst per-coin maxdd diff: -2.82pp on BTC (pass=True, threshold >= -5.00pp)
+Variant K3 (keltner_breakout): FAIL
+  (a) sharpe_sum diff: -0.0634 (pass=False) [var=1.1840, def=1.2474]
+  (b) return_sum diff: -22.82pp (pass=False) [var=25.88%, def=48.70%]
+  (c) worst per-coin return diff: -20.43pp on ETH (pass=False, threshold >= -5.00pp)
+  (d) worst per-coin maxdd diff: -0.75pp on BTC (pass=True, threshold >= -5.00pp)
+Variant R1 (rsi_atr_trend_4h): FAIL
+  (a) sharpe_sum diff: -0.2571 (pass=False) [var=1.2441, def=1.5012]
+  (b) return_sum diff: -22.10pp (pass=False) [var=58.71%, def=80.82%]
+  (c) worst per-coin return diff: -14.81pp on ETH (pass=False, threshold >= -5.00pp)
+  (d) worst per-coin maxdd diff: -0.11pp on ETH (pass=True, threshold >= -5.00pp)
+Variant R2 (rsi_atr_trend_4h): FAIL
+  (a) sharpe_sum diff: -0.0043 (pass=False) [var=1.4969, def=1.5012]
+  (b) return_sum diff: +41.45pp (pass=True) [var=122.27%, def=80.82%]
+  (c) worst per-coin return diff: +6.11pp on BTC (pass=True, threshold >= -5.00pp)
+  (d) worst per-coin maxdd diff: -13.21pp on BTC (pass=False, threshold >= -5.00pp)
+
+=== FULL P2 VALIDATION TABLE ===
+        strategy   variant  multiplier  ema_period  atr_period  stop_atr  period   symbol   return   sharpe     maxdd  trades  return_diff_pp  sharpe_diff  maxdd_diff_pp
+keltner_breakout K-default         2.0          35          17       2.0    <NA> BTC/USDT 0.153724 0.435390 -0.134469     139        0.000000     0.000000       0.000000
+keltner_breakout K-default         2.0          35          17       2.0    <NA> ETH/USDT 0.333302 0.811981 -0.164872     127        0.000000     0.000000       0.000000
+keltner_breakout        K1         3.0          20          21       2.0    <NA> BTC/USDT 0.163216 0.671220 -0.124911      54        0.949219     0.235830       0.955811
+keltner_breakout        K1         3.0          20          21       2.0    <NA> ETH/USDT 0.175378 0.697620 -0.062283      61      -15.792349    -0.114362      10.258891
+keltner_breakout        K2         2.5          20          14       2.0    <NA> BTC/USDT 0.167965 0.580222 -0.162684      84        1.424130     0.144832      -2.821462
+keltner_breakout        K2         2.5          20          14       2.0    <NA> ETH/USDT 0.217049 0.749774 -0.081079      88      -11.625267    -0.062207       8.379312
+keltner_breakout        K3         3.0          20          14       2.0    <NA> BTC/USDT 0.129828 0.584439 -0.142010      50       -2.389654     0.149049      -0.754080
+keltner_breakout        K3         3.0          20          14       2.0    <NA> ETH/USDT 0.128963 0.599574 -0.067296      56      -20.433898    -0.212408       9.757626
+rsi_atr_trend_4h R-default         NaN        <NA>        <NA>       1.5      14 BTC/USDT 0.204955 0.484774 -0.160720      39        0.000000     0.000000       0.000000
+rsi_atr_trend_4h R-default         NaN        <NA>        <NA>       1.5      14 ETH/USDT 0.603214 1.016388 -0.131013      31        0.000000     0.000000       0.000000
+rsi_atr_trend_4h        R1         NaN        <NA>        <NA>       1.5      21 BTC/USDT 0.131995 0.381465 -0.136715      25       -7.296021    -0.103309       2.400489
+rsi_atr_trend_4h        R1         NaN        <NA>        <NA>       1.5      21 ETH/USDT 0.455129 0.862626 -0.132130      23      -14.808492    -0.153763      -0.111691
+rsi_atr_trend_4h        R2         NaN        <NA>        <NA>       1.0      10 BTC/USDT 0.266101 0.445662 -0.292786      67        6.114600    -0.039112     -13.206644
+rsi_atr_trend_4h        R2         NaN        <NA>        <NA>       1.0      10 ETH/USDT 0.956570 1.051210 -0.212679      47       35.335589     0.034821      -8.166588
+
+=== RESTORING BACKUP FILES ===
+Restored all files from /home/hatch/workspace/crypto-strategy-backtest/results/backup_validation_20261109 to /home/hatch/workspace/crypto-strategy-backtest/results
+Verified BTCUSDT_4h_2024-01-01_2026-11-08_summary.csv: 14 lines (14 expected)
+Verified ETHUSDT_4h_2024-01-01_2026-11-08_summary.csv: 14 lines (14 expected)
+Verified full-period BTCUSDT_4h_2021-01-01_2026-11-08_summary.csv: 14 lines (14 expected)
+Verified full-period ETHUSDT_4h_2021-01-01_2026-11-08_summary.csv: 14 lines (14 expected)
+Verified p2_validation.csv survived restore: 15 lines (15 expected: 1 header + 14 rows).
+
+=== P2 VALIDATION COMPLETED SUCCESSFULLY ===
