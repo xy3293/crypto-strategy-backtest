@@ -182,6 +182,34 @@ Evaluated on Binance USDT perpetual futures, 4h timeframe, 2021-01-01 to 2026-11
 | bollinger_mean_reversion_4h | -48.71% | -10.78% | -1.0033 | -57.21% | 53.33% | 0.805 | 780 | 1.33 | +349.16 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.3910 | -100.00% | 0.00% | 0.000 | 1 | 533.83 | -11914.76 | 1 |
 
+## Validation (2026-11-09)
+
+Full report: `results/VALIDATION.md`. The 7 strategies positive on both BTC and ETH were
+stress-tested four ways (same engine and costs): split-sample 2021–2023 vs 2024–2026,
+cross-market SOL/USDT and BNB/USDT, 1h timeframe with parameters unscaled, and a
+Keltner parameter-sensitivity sweep (multiplier 1.5/2.5, EMA 20/50, ATR 14/21).
+
+**Verdict: 3 hold up, 4 are luck / regime-dependent.**
+
+| Strategy | Verdict | Split-sample (4 segments) | SOL / BNB (4h) | 1h BTC / ETH |
+|---|---|---|---|---|
+| rsi_atr_trend_4h | Holds up (elite) | all 4 positive | +297.3% / +303.1% | +85.7% / +150.5% |
+| keltner_breakout | Holds up (core) | all 4 positive | +169.9% / +149.0% | -25.4% / +18.6% |
+| supertrend_4h | Holds up (defensive) | all 4 positive | +73.1% / +71.0% | -42.7% / -20.9% |
+| turtle_donchian_4h | Luck / regime | ETH 2021–23 -8.6% | +84.2% / +80.5% | -79.8% / -62.0% |
+| bollinger_breakout | Luck / regime | ETH 2021–23 -3.7% | +21.4% / +55.7% | -81.3% / -57.1% |
+| adx_trend_4h | Luck / regime | BTC 2024–26 -6.4% | +33.9% / +16.0% | -79.9% / -57.0% |
+| ema_ribbon_4h | Luck / regime | ETH 2021–23 -3.4% | +152.4% / +78.5% | -83.5% / -66.0% |
+
+Keltner sensitivity: all 12 parameter variants positive on both coins (+32.7% to +90.9%),
+no sign flips — but the best-looking variants (multiplier 2.5, EMA 20 on ETH) are
+in-sample optima and must not be adopted without out-of-sample confirmation.
+`rsi_atr_trend_4h` is the only strategy that profits on unscaled 1h, but its drawdowns
+are the largest (up to -60.1% BTC 1h, -52.4% BNB 4h). Recommended portfolio trio for
+the next stage: `rsi_atr_trend_4h` + `keltner_breakout` + `supertrend_4h`.
+Also confirmed dead: MACD, J Law (5 trades on SOL in 6 years), both mean-reversion
+strategies (-95% to -99.9% on 1h), and buy-and-hold liquidated -100% on SOL too.
+
 ## Risk disclaimer
 
 Leverage and funding can erase paper profits. Gaps can exceed planned stop risk;
