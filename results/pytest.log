@@ -1,26 +1,2 @@
-============================= test session starts ==============================
-platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /home/hatch/workspace/crypto-strategy-backtest/.venv/bin/python
-cachedir: .pytest_cache
-rootdir: /home/hatch/workspace/crypto-strategy-backtest
-collecting ... collected 18 items
-
-tests/test_engine.py::test_next_open_no_lookahead PASSED                 [  5%]
-tests/test_engine.py::test_funding_sign[1--1.0] PASSED                   [ 11%]
-tests/test_engine.py::test_funding_sign[-1-1.0] PASSED                   [ 16%]
-tests/test_engine.py::test_fee_and_slippage PASSED                       [ 22%]
-tests/test_engine.py::test_liquidation[1-mark_low-1.0] PASSED            [ 27%]
-tests/test_engine.py::test_liquidation[-1-mark_high-1000.0] PASSED       [ 33%]
-tests/test_engine.py::test_stop_gap_and_risk PASSED                      [ 38%]
-tests/test_engine.py::test_metrics PASSED                                [ 44%]
-tests/test_engine.py::test_strategy_prefix_invariance[turtle_donchian_4h] PASSED [ 50%]
-tests/test_engine.py::test_strategy_prefix_invariance[supertrend_4h] PASSED [ 55%]
-tests/test_engine.py::test_strategy_prefix_invariance[rsi_atr_trend_4h] PASSED [ 61%]
-tests/test_engine.py::test_strategy_prefix_invariance[bollinger_breakout] PASSED [ 66%]
-tests/test_engine.py::test_strategy_prefix_invariance[keltner_breakout] PASSED [ 72%]
-tests/test_engine.py::test_strategy_prefix_invariance[macd_ema_trend] PASSED [ 77%]
-tests/test_engine.py::test_leverage_cap PASSED                           [ 83%]
-tests/test_engine.py::test_stop_risks_one_percent_before_costs PASSED    [ 88%]
-tests/test_engine.py::test_round_trip_pnl_reconciles_equity PASSED       [ 94%]
-tests/test_real_data.py::test_real_perpetual_end_to_end PASSED           [100%]
-
-============================== 18 passed in 2.04s ==============================
+..................................                                       [100%]
+34 passed in 3.62s

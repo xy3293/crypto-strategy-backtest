@@ -50,7 +50,8 @@ CLI `--params` on `run`. Compare uses defaults. Lookbacks are bars; switching to
 1h does not automatically rescale them. These are swing research rules targeting
 roughly 3–14 day holds, **not a guarantee**: stops and trend reversals can produce
 much shorter holds. The report exposes average holding days so that this target
-can be checked rather than assumed. Only MACD has a hard 14-day maximum.
+can be checked rather than assumed. MACD has a hard 14-day maximum and J Law Swing
+Trade a hard 7-day maximum.
 
 | Strategy | Entry and exit rules | Defaults |
 |---|---|---|
@@ -60,6 +61,7 @@ can be checked rather than assumed. Only MACD has a hard 14-day maximum.
 | bollinger_breakout | Close above upper SMA band = long; below lower = short. Exit across midline or ATR stop. Population standard deviation. | period=20, k=2, atr_period=14, stop_atr=2 |
 | keltner_breakout | Close above EMA+multiplier*ATR = long, below EMA-multiplier*ATR = short. Exit across EMA or ATR stop. | ema_period=35, atr_period=17, multiplier=2, stop_atr=2 |
 | macd_ema_trend | Close above EMA20 and positive MACD histogram = long; mirror = short. Exit on opposite condition, 3R target, trailing ATR stop or 14 days. | ema_period=20, fast=12, slow=26, signal=9, atr_period=14, stop_atr=2, target_r=3, max_days=14 |
+| jlaw_swing_breakout_4h | J Law Swing Trade (YouTube, 2020): close above the prior 30-bar tight range (high-low ≤5%) with close above SMA100 and SMA100 above SMA200 = long; mirror = short. Stop at the range edge, target max(2R, 5%) capped at 15%, 7-day maximum. No entry if close is already >4% beyond the range edge. | range=30 bars, max_width=5%, fast=100, slow=200, no_chase=4%, target_r=2 (floor 5%, cap 15%), max_days=7 |
 
 Supertrend also uses a 3 ATR emergency stop to provide finite risk sizing. After
 an emergency stop it reenters its current direction on the next open; thus its
@@ -150,6 +152,7 @@ Evaluated on Binance USDT perpetual futures, 4h timeframe, 2021-01-01 to 2026-11
 | bollinger_breakout | +60.14% | +8.38% | 0.6352 | -23.95% | 33.12% | 1.182 | 471 | 2.49 | -541.51 | 0 |
 | keltner_breakout | +69.31% | +9.42% | 0.7173 | -13.45% | 31.48% | 1.312 | 270 | 4.13 | -772.21 | 0 |
 | macd_ema_trend | -19.10% | -3.56% | -0.1747 | -32.24% | 32.15% | 0.958 | 1067 | 1.89 | -367.21 | 0 |
+| jlaw_swing_breakout_4h | -3.17% | -0.55% | -0.1822 | -8.06% | 42.86% | 0.834 | 42 | 4.47 | -20.39 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.2249 | -100.00% | 0.00% | 0.000 | 1 | 677.67 | -5657.96 | 1 |
 
 ### ETH/USDT Perpetual
@@ -161,6 +164,7 @@ Evaluated on Binance USDT perpetual futures, 4h timeframe, 2021-01-01 to 2026-11
 | bollinger_breakout | +9.83% | +1.62% | 0.1853 | -24.85% | 28.22% | 1.038 | 489 | 2.35 | -591.89 | 0 |
 | keltner_breakout | +37.34% | +5.57% | 0.4807 | -16.49% | 32.45% | 1.207 | 265 | 4.08 | -742.87 | 0 |
 | macd_ema_trend | +61.39% | +8.53% | 0.6281 | -25.80% | 34.33% | 1.103 | 1075 | 1.88 | -578.86 | 0 |
+| jlaw_swing_breakout_4h | -0.04% | -0.01% | 0.0035 | -2.95% | 33.33% | 0.993 | 12 | 5.36 | -2.47 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.3910 | -100.00% | 0.00% | 0.000 | 1 | 533.83 | -11914.76 | 1 |
 
 ## Risk disclaimer
