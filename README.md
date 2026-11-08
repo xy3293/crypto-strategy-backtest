@@ -210,6 +210,29 @@ the next stage: `rsi_atr_trend_4h` + `keltner_breakout` + `supertrend_4h`.
 Also confirmed dead: MACD, J Law (5 trades on SOL in 6 years), both mean-reversion
 strategies (-95% to -99.9% on 1h), and buy-and-hold liquidated -100% on SOL too.
 
+## Portfolio combination (2026-11-09)
+
+Full report: `results/PORTFOLIO.md`. The three validated strategies were combined by
+weighted-average of their equity curves (fees/funding already inside each curve, so
+no double counting; capital split, no shared margin). Three portfolios, 4 coins,
+4h, $10,000 start. Recommended: **c_sharpe** (Sharpe-weighted: keltner 41.84%,
+rsi_atr 29.40%, supertrend 28.76%).
+
+| Portfolio | BTC return / Sharpe / DD | ETH return / Sharpe / DD | SOL return / Sharpe / DD | BNB return / Sharpe / DD |
+|---|---|---|---|---|
+| a_equal3 | +41.90% / 0.5990 / -10.33% | +40.46% / 0.5503 / -19.67% | +180.10% / 1.0174 / -21.12% | +174.39% / 0.9227 / -26.52% |
+| b_equal2 (no supertrend) | +47.13% / 0.5986 / -11.61% | +50.15% / 0.5711 / -25.73% | +233.60% / 1.0133 / -26.64% | +226.07% / 0.9407 / -32.69% |
+| c_sharpe | +45.38% / 0.6255 / -10.60% | +40.19% / 0.5497 / -18.41% | +179.50% / 1.0509 / -19.32% | +171.88% / 0.9326 / -23.80% |
+
+Honest headline: **no portfolio beats the best single strategy on total return** in any
+coin (BTC keltner +69.31%, ETH/SOL/BNB rsi_atr +62.96%/+297.34%/+303.12%). What the
+portfolio buys is drawdown control and, on ETH and BNB, Sharpe above every single
+strategy (ETH 0.5711 vs 0.5262 best single; BNB 0.9407 vs 0.8897). Versus the worst
+single strategy (rsi_atr) the c_sharpe drawdown falls 14–29pp; versus the best
+single strategy (supertrend) it only improves on BTC (-10.60% vs -12.77%) and is
+deeper on ETH/SOL/BNB. Diversification works because rsi_atr is the low-correlation
+leg (0.26–0.49 vs the other two) while keltner and supertrend move together (0.76–0.87).
+
 ## Risk disclaimer
 
 Leverage and funding can erase paper profits. Gaps can exceed planned stop risk;
