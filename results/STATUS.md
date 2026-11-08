@@ -2,19 +2,20 @@
 
 Requested period: 2021-01-01 00:00 UTC to 2026-11-08 00:00 UTC (exclusive).  
 Requested markets: Binance BTCUSDT and ETHUSDT USDT-margined perpetual futures (`BTC/USDT` and `ETH/USDT`).  
-Requested timeframe: 4h; all seven default strategies plus 1x perpetual buy-and-hold.
+Requested timeframe: 4h; all twelve default strategies plus 1x perpetual buy-and-hold.
 
 ## Verification & Test Results
 
-- **pytest**: **34 passed, 0 failed** in ~3s (see `results/pytest.log`).
+- **pytest**: **64 passed, 0 failed** in ~3s (see `results/pytest.log`).
 - **All unit and integration tests passing**, including:
   - `test_next_open_no_lookahead`
   - `test_funding_sign` (long pays positive funding, short earns)
   - `test_fee_and_slippage` (taker fee 0.05% and adverse slippage 0.05% per side)
   - `test_liquidation` (isolated margin, 0.5% maintenance margin against adverse mark price)
   - `test_stop_gap_and_risk` & `test_stop_risks_one_percent_before_costs` (1% equity risk at ATR stop)
-  - `test_strategy_prefix_invariance` across all 7 strategies
+  - `test_strategy_prefix_invariance` across all 12 strategies
   - `test_tight_range_breakout`, `test_no_chase`, `test_target_math`, `test_time_stop_and_no_other_exits` for `jlaw_swing_breakout_4h` (16 new cases)
+  - `tests/test_batch5_strategies.py`: long/short entry, long/short exit and prefix invariance for each of `ema_ribbon_4h`, `adx_trend_4h`, `ichimoku_4h`, `rsi_reversion_4h`, `bollinger_mean_reversion_4h` (25 cases)
   - `test_round_trip_pnl_reconciles_equity`
   - `test_real_perpetual_end_to_end` (real Binance data loader & execution)
 
@@ -46,6 +47,11 @@ Period: 2021-01-01 00:00 UTC to 2026-11-08 00:00 UTC (12,822 bars, 6,390 funding
 | keltner_breakout | +69.31% | +9.42% | 0.7173 | -13.45% | 31.48% | 1.312 | 270 | 4.13 | -772.21 | 0 |
 | macd_ema_trend | -19.10% | -3.56% | -0.1747 | -32.24% | 32.15% | 0.958 | 1067 | 1.89 | -367.21 | 0 |
 | jlaw_swing_breakout_4h | -3.17% | -0.55% | -0.1822 | -8.06% | 42.86% | 0.834 | 42 | 4.47 | -20.39 | 0 |
+| ema_ribbon_4h | +20.70% | +3.27% | 0.2881 | -16.96% | 26.95% | 1.079 | 486 | 3.38 | -706.67 | 0 |
+| adx_trend_4h | +22.59% | +3.54% | 0.3299 | -16.41% | 30.54% | 1.096 | 442 | 2.82 | -444.88 | 0 |
+| ichimoku_4h | -16.72% | -3.08% | -0.1387 | -32.33% | 24.73% | 0.931 | 655 | 2.21 | -554.99 | 0 |
+| rsi_reversion_4h | -59.20% | -14.21% | -1.5624 | -61.94% | 39.39% | 0.667 | 429 | 1.78 | +309.26 | 0 |
+| bollinger_mean_reversion_4h | -67.74% | -17.58% | -1.6387 | -70.87% | 48.68% | 0.711 | 797 | 1.34 | +214.95 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.2249 | -100.00% | 0.00% | 0.000 | 1 | 677.67 | -5657.96 | 1 |
 
 ---
@@ -63,6 +69,11 @@ Period: 2021-01-01 00:00 UTC to 2026-11-08 00:00 UTC (12,822 bars, 6,390 funding
 | keltner_breakout | +37.34% | +5.57% | 0.4807 | -16.49% | 32.45% | 1.207 | 265 | 4.08 | -742.87 | 0 |
 | macd_ema_trend | +61.39% | +8.53% | 0.6281 | -25.80% | 34.33% | 1.103 | 1075 | 1.88 | -578.86 | 0 |
 | jlaw_swing_breakout_4h | -0.04% | -0.01% | 0.0035 | -2.95% | 33.33% | 0.993 | 12 | 5.36 | -2.47 | 0 |
+| ema_ribbon_4h | +1.23% | +0.21% | 0.0900 | -22.43% | 26.46% | 1.004 | 514 | 3.16 | -806.65 | 0 |
+| adx_trend_4h | +17.66% | +2.82% | 0.2848 | -19.57% | 27.27% | 1.083 | 440 | 2.68 | -397.94 | 0 |
+| ichimoku_4h | +62.93% | +8.70% | 0.6355 | -18.69% | 25.17% | 1.195 | 596 | 2.36 | -898.88 | 0 |
+| rsi_reversion_4h | -60.40% | -14.64% | -1.6526 | -62.37% | 40.94% | 0.640 | 425 | 1.81 | +339.20 | 0 |
+| bollinger_mean_reversion_4h | -48.71% | -10.78% | -1.0033 | -57.21% | 53.33% | 0.805 | 780 | 1.33 | +349.16 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.3910 | -100.00% | 0.00% | 0.000 | 1 | 533.83 | -11914.76 | 1 |
 
 ---
@@ -74,3 +85,6 @@ Period: 2021-01-01 00:00 UTC to 2026-11-08 00:00 UTC (12,822 bars, 6,390 funding
 3. **RSI ATR Trend**: Demonstrated outstanding performance on ETH (+62.96% return, 1.921 profit factor, ~15.35 days average hold).
 4. **Funding Drag**: Net long exposure across trend followers resulted in net funding paid (-$367 to -$1,126 USDT), but this was far lower than buy-and-hold (-$5,657 on BTC, -$11,914 on ETH) because systematic strategies are flat or short during downtrends.
 5. **J Law Swing Trade underperformed**: -3.17% on BTC and -0.04% on ETH, the worst Sharpe on both, but also the smallest maximum drawdown (-8.06% BTC, -2.95% ETH). It is very selective — only 42 BTC trades and 12 ETH trades in ~6 years — and its 2R target was rarely reached (7 of 42 on BTC, 2 of 12 on ETH), so wins were smaller than losses (profit factor 0.834 BTC, 0.993 ETH) despite the highest BTC win rate (42.86%). The ETH result is effectively breakeven on a tiny sample. The strategy was implemented exactly as confirmed, with the range defined on the prior 30 closed bars (including the signal bar would make a breakout mathematically impossible) and the target capped at 15%.
+6. **Mean reversion fails badly on crypto perpetuals**: `rsi_reversion_4h` (-59.20% BTC, -60.40% ETH) and `bollinger_mean_reversion_4h` (-67.74% BTC, -48.71% ETH) lost heavily on both coins, Sharpe -1.0 to -1.65, drawdowns -57% to -71%. Win rates were not low (39–53%, the Bollinger version's 53.33% on ETH is the highest of all 12), but profit factors were only 0.64–0.80 — small wins, big losses — and average holds were just 1.3–1.8 days, far below the 3–14 day target. In this market, trend/breakout wins and mean reversion pays.
+7. **Ichimoku is inconsistent like MACD**: +62.93% on ETH (Sharpe 0.6355, among the best) but -16.72% on BTC. A single-coin leader misleads; cross-coin consistency is the test.
+8. **Best new strategy is ADX trend**: `adx_trend_4h` (+22.59% BTC, +17.66% ETH) is the only new strategy positive on both coins with Sharpe near 0.3 on both; `ema_ribbon_4h` is also positive on both but nearly flat on ETH (+1.23%). **Best overall remains `keltner_breakout`** (+69.31% BTC, +37.34% ETH, combined +106.65pp), ahead of `rsi_atr_trend_4h` (+87.90pp) and `bollinger_breakout` (+69.97pp). Seven of the twelve strategies are positive on both coins.

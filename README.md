@@ -50,8 +50,8 @@ CLI `--params` on `run`. Compare uses defaults. Lookbacks are bars; switching to
 1h does not automatically rescale them. These are swing research rules targeting
 roughly 3–14 day holds, **not a guarantee**: stops and trend reversals can produce
 much shorter holds. The report exposes average holding days so that this target
-can be checked rather than assumed. MACD has a hard 14-day maximum and J Law Swing
-Trade a hard 7-day maximum.
+can be checked rather than assumed. MACD and the five batch-5 strategies have a hard 14-day maximum; J Law Swing
+Trade has a hard 7-day maximum.
 
 | Strategy | Entry and exit rules | Defaults |
 |---|---|---|
@@ -62,6 +62,11 @@ Trade a hard 7-day maximum.
 | keltner_breakout | Close above EMA+multiplier*ATR = long, below EMA-multiplier*ATR = short. Exit across EMA or ATR stop. | ema_period=35, atr_period=17, multiplier=2, stop_atr=2 |
 | macd_ema_trend | Close above EMA20 and positive MACD histogram = long; mirror = short. Exit on opposite condition, 3R target, trailing ATR stop or 14 days. | ema_period=20, fast=12, slow=26, signal=9, atr_period=14, stop_atr=2, target_r=3, max_days=14 |
 | jlaw_swing_breakout_4h | J Law Swing Trade (YouTube, 2020): close above the prior 30-bar tight range (high-low ≤5%) with close above SMA100 and SMA100 above SMA200 = long; mirror = short. Stop at the range edge, target max(2R, 5%) capped at 15%, 7-day maximum. No entry if close is already >4% beyond the range edge. | range=30 bars, max_width=5%, fast=100, slow=200, no_chase=4%, target_r=2 (floor 5%, cap 15%), max_days=7 |
+| ema_ribbon_4h | EMA9 above EMA21 above EMA55 = long; reverse = short. Exit when the alignment breaks. ATR stop. | fast=9, mid=21, slow=55, atr_period=14, stop_atr=2, max_days=14 |
+| adx_trend_4h | ADX(14) above 25 with +DI above −DI = long; mirror = short. Exit when ADX falls below 20 or DI flips. ATR stop. | period=14, adx_entry=25, adx_exit=20, atr_period=14, stop_atr=2, max_days=14 |
+| ichimoku_4h | Close above the cloud with Tenkan above Kijun = long; mirror = short. Exit on Tenkan/Kijun cross or close re-entering the cloud. ATR stop. | tenkan=9, kijun=26, senkou_b=52, shift=26, atr_period=14, stop_atr=2, max_days=14 |
+| rsi_reversion_4h | RSI(14) below 30 = long; above 70 = short. Exit at RSI 50. ATR stop. | period=14, lower=30, upper=70, exit=50, atr_period=14, stop_atr=2, max_days=14 |
+| bollinger_mean_reversion_4h | Close below the lower SMA band = long; above the upper = short. Exit at the middle band. ATR stop. | period=20, k=2, atr_period=14, stop_atr=2, max_days=14 |
 
 Supertrend also uses a 3 ATR emergency stop to provide finite risk sizing. After
 an emergency stop it reenters its current direction on the next open; thus its
@@ -153,6 +158,11 @@ Evaluated on Binance USDT perpetual futures, 4h timeframe, 2021-01-01 to 2026-11
 | keltner_breakout | +69.31% | +9.42% | 0.7173 | -13.45% | 31.48% | 1.312 | 270 | 4.13 | -772.21 | 0 |
 | macd_ema_trend | -19.10% | -3.56% | -0.1747 | -32.24% | 32.15% | 0.958 | 1067 | 1.89 | -367.21 | 0 |
 | jlaw_swing_breakout_4h | -3.17% | -0.55% | -0.1822 | -8.06% | 42.86% | 0.834 | 42 | 4.47 | -20.39 | 0 |
+| ema_ribbon_4h | +20.70% | +3.27% | 0.2881 | -16.96% | 26.95% | 1.079 | 486 | 3.38 | -706.67 | 0 |
+| adx_trend_4h | +22.59% | +3.54% | 0.3299 | -16.41% | 30.54% | 1.096 | 442 | 2.82 | -444.88 | 0 |
+| ichimoku_4h | -16.72% | -3.08% | -0.1387 | -32.33% | 24.73% | 0.931 | 655 | 2.21 | -554.99 | 0 |
+| rsi_reversion_4h | -59.20% | -14.21% | -1.5624 | -61.94% | 39.39% | 0.667 | 429 | 1.78 | +309.26 | 0 |
+| bollinger_mean_reversion_4h | -67.74% | -17.58% | -1.6387 | -70.87% | 48.68% | 0.711 | 797 | 1.34 | +214.95 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.2249 | -100.00% | 0.00% | 0.000 | 1 | 677.67 | -5657.96 | 1 |
 
 ### ETH/USDT Perpetual
@@ -165,6 +175,11 @@ Evaluated on Binance USDT perpetual futures, 4h timeframe, 2021-01-01 to 2026-11
 | keltner_breakout | +37.34% | +5.57% | 0.4807 | -16.49% | 32.45% | 1.207 | 265 | 4.08 | -742.87 | 0 |
 | macd_ema_trend | +61.39% | +8.53% | 0.6281 | -25.80% | 34.33% | 1.103 | 1075 | 1.88 | -578.86 | 0 |
 | jlaw_swing_breakout_4h | -0.04% | -0.01% | 0.0035 | -2.95% | 33.33% | 0.993 | 12 | 5.36 | -2.47 | 0 |
+| ema_ribbon_4h | +1.23% | +0.21% | 0.0900 | -22.43% | 26.46% | 1.004 | 514 | 3.16 | -806.65 | 0 |
+| adx_trend_4h | +17.66% | +2.82% | 0.2848 | -19.57% | 27.27% | 1.083 | 440 | 2.68 | -397.94 | 0 |
+| ichimoku_4h | +62.93% | +8.70% | 0.6355 | -18.69% | 25.17% | 1.195 | 596 | 2.36 | -898.88 | 0 |
+| rsi_reversion_4h | -60.40% | -14.64% | -1.6526 | -62.37% | 40.94% | 0.640 | 425 | 1.81 | +339.20 | 0 |
+| bollinger_mean_reversion_4h | -48.71% | -10.78% | -1.0033 | -57.21% | 53.33% | 0.805 | 780 | 1.33 | +349.16 | 0 |
 | buy_and_hold | -100.00% | -100.00% | -0.3910 | -100.00% | 0.00% | 0.000 | 1 | 533.83 | -11914.76 | 1 |
 
 ## Risk disclaimer
