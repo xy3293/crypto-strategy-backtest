@@ -214,6 +214,7 @@ def load(symbol, timeframe, start, end, cache='data'):
         if not df.index.equals(mark.index) or not df.index.to_series().diff().dropna().eq(step).all():
             raise ValueError('Missing or misaligned contract/mark candles; refusing to bridge gaps')
         df = df.join(mark[['open', 'high', 'low', 'close']].add_prefix('mark_'))
+        df['funding_rate'] = funding['rate'].reindex(df.index, method='ffill').fillna(0.0)
         return df, funding
 
     # Try ccxt REST API first
@@ -302,4 +303,5 @@ def load(symbol, timeframe, start, end, cache='data'):
     funding.to_csv(fpath)
 
     df = df.join(mark[['open', 'high', 'low', 'close']].add_prefix('mark_'))
+    df['funding_rate'] = funding['rate'].reindex(df.index, method='ffill').fillna(0.0)
     return df, funding

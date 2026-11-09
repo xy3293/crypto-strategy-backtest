@@ -120,3 +120,14 @@ Full report: `results/TUNING.md` (Antigravity only, no Codex, no code changes, p
 ## Final Summary (2026-11-09)
 
 The full research story is consolidated in `results/FINAL.md` (263 lines): the research question and "good strategy" definition, the 12-strategy full-period table, validation verdicts (3 hold up, 4 luck/regime, MACD/J Law/mean-reversion dead, buy-and-hold liquidated -100% on BTC/ETH/SOL), portfolio results (c_sharpe recommended), tuning outcome (all 5 candidates failed out-of-sample, defaults stand), the final configuration, honest limitations (full-history selection bias, no true forward test yet, capital-split/no-shared-margin assumption), and next steps (funding-rate round). All numbers in it were checked against the archived reports and summary CSVs.
+
+## Funding-Rate Round (2026-11-09)
+
+Last strategy-hunting round, per agreement. Three pure-perp funding-rate strategies (report: `results/FUNDING.md`); `backtest/data.py` now attaches the latest 8h funding rate to each bar (forward-filled, causal), strategies grew 12 → 15, pytest 70 → 88 passed.
+
+- **Dead:** `funding_zscore_fade` (BTC -3.39%, ETH -7.45% — earned +$375 funding but price losses + friction swamped it) and `funding_extreme_threshold` (BTC +2.94% on only 39 trades, ETH -19.98%).
+- **Validated, 4th survivor:** `funding_filtered_keltner` (keltner with a funding filter: long only if funding ≤ +0.01%/8h, short only if ≥ -0.01%/8h) — BTC +61.56% (Sharpe 0.68), ETH +55.46% (0.66), SOL +125.52% (1.03), BNB +139.84% (0.88); all 4 split segments positive. Funding drag cut by 1/3–1/2 on all 4 coins vs unfiltered keltner.
+- **Honest position:** it beats unfiltered keltner only on ETH (+55.46% vs +37.34%); it loses on BTC (+61.56% vs +69.31%), SOL (+125.52% vs +169.86%) and BNB (+139.84% vs +149.01%). It is a validated alternative, not a clear upgrade.
+- **Standing configuration unchanged:** c_sharpe portfolio (keltner 41.84% / rsi_atr 29.40% / supertrend 28.76%) still recommended; whether to swap in the filtered keltner or add it as a 4th leg is a separate, undecided question. Strategy hunting stops here.
+
+**Decision (2026-11-09, Chen): 到此为止，组合不变.** c_sharpe stays the recommended portfolio; `funding_filtered_keltner` is recorded as a validated alternative only — neither swapped in for keltner nor added as a 4th leg. Strategy hunting is closed.

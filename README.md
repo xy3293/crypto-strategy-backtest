@@ -4,9 +4,11 @@ Python 3.12 research tool for **Binance USDT-margined perpetual futures**, suppo
 longs and shorts on 4h (default) and 1h candles. It does not place orders.
 
 **Start here: the full research story is in [`results/FINAL.md`](results/FINAL.md)** —
-12 strategies tested, 3 validated, 1 recommended portfolio (`c_sharpe`, Sharpe-weighted
+15 strategies tested, 4 validated, 1 recommended portfolio (`c_sharpe`, Sharpe-weighted
 rsi_atr + keltner + supertrend at default parameters), parameter tuning failed
-out-of-sample so defaults stand.
+out-of-sample so defaults stand. A final funding-rate round (2026-11-09, see
+[`results/FUNDING.md`](results/FUNDING.md)) added a 4th validated strategy
+(`funding_filtered_keltner`) but did not change the recommended portfolio.
 
 ## Setup and usage
 

@@ -8,7 +8,7 @@ from backtest.strategies import NAMES, get_strategy
 
 
 def candles(n=8):
-    return pd.DataFrame({'open': 100., 'high': 101., 'low': 99., 'close': 100.},
+    return pd.DataFrame({'open': 100., 'high': 101., 'low': 99., 'close': 100., 'funding_rate': 0.0},
                         index=pd.date_range('2024-01-01', periods=n, freq='4h', tz='UTC'))
 
 
