@@ -1,7 +1,10 @@
+import json
+import sys
 from unittest.mock import patch
 import numpy as np
 import pandas as pd
 import pytest
+from backtest.__main__ import long_only_mask, main
 from backtest.data import load_stocks
 from backtest.engine import run, Config
 from backtest.strategies.common import output
@@ -253,3 +256,137 @@ def test_compare_stocks_smoke(tmp_path):
     assert bh['total_funding'] == 0.0
     assert bh['liquidations'] == 0.0
     assert bh['trade_count'] == 1.0
+
+
+def test_long_only_mask_unit_behavior():
+    dates = pd.date_range('2024-01-01', periods=5, freq='D', tz='UTC')
+    raw_signals = pd.DataFrame({
+        'direction': [1, 0, -1, 0, -1],
+        'stop_distance': [5.0, 5.0, 5.0, 5.0, 5.0],
+        'exit_long': [False, False, False, False, False],
+        'exit_short': [False, False, False, False, False],
+    }, index=dates)
+
+    masked = long_only_mask(raw_signals)
+
+    # Original DataFrame must not be mutated
+    assert raw_signals.loc[dates[2], 'direction'] == -1
+    assert bool(raw_signals.loc[dates[2], 'exit_long']) is False
+
+    # Masked DataFrame: where direction < 0, direction becomes 0 and exit_long becomes True
+    assert list(masked['direction']) == [1, 0, 0, 0, 0]
+    assert [bool(x) for x in masked['exit_long']] == [False, False, True, False, True]
+    assert [bool(x) for x in masked['exit_short']] == [False, False, False, False, False]
+    assert list(masked['stop_distance']) == [5.0, 5.0, 5.0, 5.0, 5.0]
+
+
+def test_long_only_mask_supertrend_execution():
+    dates = pd.date_range('2024-01-01', periods=6, freq='D', tz='UTC')
+    df = pd.DataFrame({
+        'open': [100.0, 100.0, 105.0, 102.0, 95.0, 95.0],
+        'high': [102.0, 106.0, 107.0, 103.0, 96.0, 96.0],
+        'low': [99.0, 99.0, 102.0, 98.0, 94.0, 94.0],
+        'close': [101.0, 105.0, 103.0, 99.0, 95.0, 95.0],
+        'volume': [1000, 1000, 1000, 1000, 1000, 1000],
+    }, index=dates)
+
+    # Supertrend-like signals: exit_long is always False; direction flips to short on bar 2
+    raw_signals = pd.DataFrame({
+        'direction': [1, 0, -1, -1, 0, 0],
+        'stop_distance': [10.0, 10.0, 10.0, 10.0, 10.0, 10.0],
+        'exit_long': [False, False, False, False, False, False],
+        'exit_short': [False, False, False, False, False, False],
+    }, index=dates)
+
+    masked_signals = long_only_mask(raw_signals)
+    cfg = Config(capital=10000, leverage=1.0, maintenance=0.0, fee=0.0005, slippage=0.0005)
+    res = run(df, masked_signals, config=cfg)
+
+    # Open long at bar 1 must close at bar 3 open due to exit_long=True from masked short flip
+    assert len(res.trades) == 1
+    t = res.trades[0]
+    assert t['side'] == 1
+    assert t['entry_time'] == dates[1]
+    assert t['exit_time'] == dates[3]
+    assert t['reason'] == 'signal/time'
+    # Masked signals must never open a short
+    assert all(tr['side'] == 1 for tr in res.trades)
+
+
+def test_compare_stocks_cli_variants(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    fake_df = pd.DataFrame({
+        'open': [100.0 + i for i in range(60)],
+        'high': [102.0 + i for i in range(60)],
+        'low': [98.0 + i for i in range(60)],
+        'close': [101.0 + i for i in range(60)],
+        'volume': [1000 for _ in range(60)],
+    }, index=pd.date_range('2024-01-01', periods=60, freq='D', tz='UTC'))
+
+    variants_dict = {
+        'keltner_v1': {'strategy': 'keltner_breakout', 'params': {'ema_period': 10}},
+        'supertrend_v1': {'strategy': 'supertrend_4h', 'params': {'period': 7}},
+    }
+    variants_json = json.dumps(variants_dict)
+
+    cli_args = [
+        'backtest', 'compare-stocks',
+        '--market', 'us',
+        '--symbols', 'TEST',
+        '--start', '2024-01-01',
+        '--end', '2024-04-01',
+        '--variants', variants_json,
+    ]
+
+    with patch('backtest.__main__.load_stocks', return_value=(fake_df.copy(), pd.DataFrame(columns=['rate']))):
+        with patch.object(sys, 'argv', cli_args):
+            main()
+
+    results_dir = tmp_path / 'results'
+    assert results_dir.exists()
+
+    summary_file = results_dir / 'TEST_daily_2024-01-01_2024-04-01_summary.csv'
+    assert summary_file.exists()
+    summary_df = pd.read_csv(summary_file, index_col=0)
+
+    # Summary rows are the variant names plus buy_and_hold
+    expected_rows = list(variants_dict.keys()) + ['buy_and_hold']
+    assert list(summary_df.index) == expected_rows
+
+    # No trades file contains a short trade
+    trade_files = list(results_dir.glob('*_trades.csv'))
+    assert len(trade_files) == len(expected_rows)
+    for trade_csv in trade_files:
+        try:
+            tdf = pd.read_csv(trade_csv)
+            if not tdf.empty and 'side' in tdf.columns:
+                assert (tdf['side'] == 1).all(), f'Found non-long trade in {trade_csv}'
+        except pd.errors.EmptyDataError:
+            pass
+
+
+def test_compare_stocks_cli_variants_unknown_strategy(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    fake_df = pd.DataFrame({
+        'open': [100.0 + i for i in range(60)],
+        'high': [102.0 + i for i in range(60)],
+        'low': [98.0 + i for i in range(60)],
+        'close': [101.0 + i for i in range(60)],
+        'volume': [1000 for _ in range(60)],
+    }, index=pd.date_range('2024-01-01', periods=60, freq='D', tz='UTC'))
+
+    bad_variants = json.dumps({'bad_strat': {'strategy': 'unknown_strategy_name'}})
+    cli_args = [
+        'backtest', 'compare-stocks',
+        '--market', 'us',
+        '--symbols', 'TEST',
+        '--start', '2024-01-01',
+        '--end', '2024-04-01',
+        '--variants', bad_variants,
+    ]
+
+    with patch('backtest.__main__.load_stocks', return_value=(fake_df.copy(), pd.DataFrame(columns=['rate']))):
+        with patch.object(sys, 'argv', cli_args):
+            with pytest.raises(ValueError, match='Unknown strategy'):
+                main()
+

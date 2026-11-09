@@ -7,6 +7,11 @@ It also has a stock mode (`compare-stocks`): the 3 validated strategies tested o
 US + A-share daily bars, 2015–2026 — see [`results/STOCKS.md`](results/STOCKS.md).
 Short answer: they do **not** transfer as-is (buy-and-hold wins in the US bull
 market; on A-shares keltner/supertrend cut drawdowns but fail split validation).
+A rebuild (long-only, rescaled parameters, per-market isolation) — see
+[`results/STOCKS_REBUILD.md`](results/STOCKS_REBUILD.md) — fixed the US failure:
+removing shorting, not parameter tuning, was the dominant fix (7 variants hold up
+in the US, 6 in A-shares, 6 in both), though buy-and-hold still wins on absolute
+return in the US and the 3–14 day swing rhythm did not recover.
 
 **Start here: the full research story is in [`results/FINAL.md`](results/FINAL.md)** —
 15 strategies tested, 4 validated, 1 recommended portfolio (`c_sharpe`, Sharpe-weighted
