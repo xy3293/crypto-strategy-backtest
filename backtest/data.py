@@ -7,10 +7,47 @@ import urllib.request
 import zipfile
 import ccxt
 import pandas as pd
+import yfinance as yf
 
 
 def utc(value):
     return pd.Timestamp(value, tz='UTC') if pd.Timestamp(value).tzinfo is None else pd.Timestamp(value).tz_convert('UTC')
+
+
+def load_stocks(symbol, start, end, cache='data'):
+    root = Path(cache) / 'stocks'
+    path = root / f'{symbol.replace(".", "_")}_daily_{start}_{end}.csv'
+    cached = path.exists()
+    if cached:
+        df = pd.read_csv(path, index_col=0, parse_dates=True)
+    else:
+        raw = yf.download(symbol, start=start, end=end, progress=False, auto_adjust=False)
+        if raw.empty:
+            raise ValueError(f'No stock bars returned for {symbol}')
+        if isinstance(raw.columns, pd.MultiIndex):
+            if 'Close' in raw.columns.get_level_values(0):
+                raw.columns = raw.columns.get_level_values(0)
+            elif 'Close' in raw.columns.get_level_values(1):
+                raw.columns = raw.columns.get_level_values(1)
+            else:
+                raw.columns = raw.columns.get_level_values(0)
+        factor = raw['Adj Close'] / raw['Close']
+        df = raw[['Open', 'High', 'Low', 'Close']].mul(factor, axis=0)
+        df['Close'] = raw['Adj Close']
+        df['Volume'] = raw['Volume']
+        df.columns = ['open', 'high', 'low', 'close', 'volume']
+    df.index = pd.DatetimeIndex(df.index).tz_localize(None).normalize().tz_localize('UTC')
+    df.index.name = 'timestamp'
+    df = df.sort_index()
+    df = df[~df.index.duplicated()]
+    df = df[(df.index >= utc(start)) & (df.index < utc(end)) &
+            (df.index < pd.Timestamp.now(tz='UTC').normalize())]
+    if len(df) < 50:
+        raise ValueError(f'Need at least 50 stock bars for {symbol}')
+    if not cached:
+        root.mkdir(parents=True, exist_ok=True)
+        df.to_csv(path)
+    return df, pd.DataFrame(columns=['rate'])
 
 
 def _download_vision_file(url, local_path):

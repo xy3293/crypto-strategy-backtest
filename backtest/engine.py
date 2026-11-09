@@ -20,11 +20,13 @@ class Config:
     fee: float = .0005
     slippage: float = .0005
     maintenance: float = .005
+    exit_fee: float = None
 
     def __post_init__(self):
+        self.exit_fee = self.fee if self.exit_fee is None else self.exit_fee
         if not 1 <= self.leverage <= 5:
             raise ValueError('Leverage must be between 1 and 5')
-        if self.capital <= 0 or not 0 < self.risk <= 1 or min(self.fee, self.slippage, self.maintenance) < 0:
+        if self.capital <= 0 or not 0 < self.risk <= 1 or min(self.fee, self.exit_fee, self.slippage, self.maintenance) < 0:
             raise ValueError('Invalid account/cost parameters')
 
 
@@ -46,7 +48,7 @@ def run(df, signals, funding=None, config=None, buy_hold=False):
     funding = funding if funding is not None else pd.DataFrame(columns=['rate'])
     events = list(funding.sort_index().itertuples())
     event_index = 0
-    step = df.index[1]-df.index[0]
+    step = df.index.to_series().diff().median()
 
     def close(price, timestamp, reason, liquidated=False):
         nonlocal cash, position, liquidations
@@ -56,7 +58,7 @@ def run(df, signals, funding=None, config=None, buy_hold=False):
             liquidations += 1
         else:
             fill = price*(1-p['side']*cfg.slippage)
-            proceeds = max(0., p['margin']+p['funding']+p['side']*p['qty']*(fill-p['entry'])-p['qty']*fill*cfg.fee)
+            proceeds = max(0., p['margin']+p['funding']+p['side']*p['qty']*(fill-p['entry'])-p['qty']*fill*cfg.exit_fee)
         cash += proceeds
         trades.append(dict(entry_time=p['time'], exit_time=timestamp, side=p['side'],
                            entry=p['entry'], exit=price, pnl=proceeds-p['margin']-p['entry_fee'],

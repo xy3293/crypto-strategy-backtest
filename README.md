@@ -3,6 +3,11 @@
 Python 3.12 research tool for **Binance USDT-margined perpetual futures**, supporting
 longs and shorts on 4h (default) and 1h candles. It does not place orders.
 
+It also has a stock mode (`compare-stocks`): the 3 validated strategies tested on
+US + A-share daily bars, 2015–2026 — see [`results/STOCKS.md`](results/STOCKS.md).
+Short answer: they do **not** transfer as-is (buy-and-hold wins in the US bull
+market; on A-shares keltner/supertrend cut drawdowns but fail split validation).
+
 **Start here: the full research story is in [`results/FINAL.md`](results/FINAL.md)** —
 15 strategies tested, 4 validated, 1 recommended portfolio (`c_sharpe`, Sharpe-weighted
 rsi_atr + keltner + supertrend at default parameters), parameter tuning failed

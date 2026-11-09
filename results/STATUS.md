@@ -131,3 +131,13 @@ Last strategy-hunting round, per agreement. Three pure-perp funding-rate strateg
 - **Standing configuration unchanged:** c_sharpe portfolio (keltner 41.84% / rsi_atr 29.40% / supertrend 28.76%) still recommended; whether to swap in the filtered keltner or add it as a 4th leg is a separate, undecided question. Strategy hunting stops here.
 
 **Decision (2026-11-09, Chen): 到此为止，组合不变.** c_sharpe stays the recommended portfolio; `funding_filtered_keltner` is recorded as a validated alternative only — neither swapped in for keltner nor added as a 4th leg. Strategy hunting is closed.
+
+## Stock Market Test (2026-11-09)
+
+Chen asked to test the validated strategies on stocks — US stocks as a proxy for tokenized US stocks (he wants to play tokenized US stocks; the tokens themselves only launched mid-2025, so the 2015–2026 test uses the underlying stock price) + A-shares. Report: `results/STOCKS.md`. Daily bars, 2015–2026 (window extended from 2021–2026 at Chen's concern that the daily sample would be too thin). 3 strategies, parameters unscaled; `funding_filtered_keltner` not tested (no funding rate in stocks). US: SPY, QQQ, AAPL, MSFT, NVDA, TSLA, long+short, $10,000. A-shares: 510300.SH, 600519.SH, 300750.SZ, 600036.SH, long-only, ¥100,000, commission 0.03% + 0.05% stamp duty on sells. Data: Yahoo Finance (yfinance 1.8.0), adjusted close. pytest 88 → 95 passed; crypto numbers unchanged.
+
+- **Verdict: the strategies do NOT transfer as-is.** All 3 fail split validation (P1 2015–2020 vs P2 2021–2026) in both markets.
+- US: buy-and-hold crushes everything (SPY +336%, QQQ +596%, NVDA +38,554%). Best strategy is rsi_atr (MSFT +158%, NVDA +159%) but only 12–20 trades per symbol in 11.8 years, avg holds 120–240 days — the 4h parameters become ultra-slow macro trend-following on daily bars. Keltner/supertrend lose on SPY/QQQ (shorting drag in a secular bull market).
+- A-shares: keltner is best (510300 +24.15%, 宁德 +43.06%); rsi_atr nearly flat on 510300 (-0.45%, 11 trades). Keltner/supertrend on 510300 cut drawdown to -9.59%/-7.20% vs buy-and-hold -45.45% — real defensive value, but they fail split validation at the single-stock level.
+- Mechanism: 4h parameters stretched ~6x in calendar time on daily bars; the US secular bull market punishes mechanical shorting; A-shares' long-only constraint helps avoid short losses but there is no sustained one-way momentum to compound.
+- Next step undecided: rebuilding the strategies for stocks (shorter parameter cycles, no shorting on US indices, stock-adapted factors) is a new project, not a tweak.
