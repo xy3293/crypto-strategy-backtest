@@ -9,33 +9,44 @@ import ccxt
 import pandas as pd
 import yfinance as yf
 
+from .tiingo import fetch_tiingo_eod, get_api_key
+
 
 def utc(value):
     return pd.Timestamp(value, tz='UTC') if pd.Timestamp(value).tzinfo is None else pd.Timestamp(value).tz_convert('UTC')
 
 
-def load_stocks(symbol, start, end, cache='data'):
+def load_stocks(symbol, start, end, cache='data', source='auto'):
     root = Path(cache) / 'stocks'
     path = root / f'{symbol.replace(".", "_")}_daily_{start}_{end}.csv'
     cached = path.exists()
     if cached:
         df = pd.read_csv(path, index_col=0, parse_dates=True)
     else:
-        raw = yf.download(symbol, start=start, end=end, progress=False, auto_adjust=False)
-        if raw.empty:
-            raise ValueError(f'No stock bars returned for {symbol}')
-        if isinstance(raw.columns, pd.MultiIndex):
-            if 'Close' in raw.columns.get_level_values(0):
-                raw.columns = raw.columns.get_level_values(0)
-            elif 'Close' in raw.columns.get_level_values(1):
-                raw.columns = raw.columns.get_level_values(1)
-            else:
-                raw.columns = raw.columns.get_level_values(0)
-        factor = raw['Adj Close'] / raw['Close']
-        df = raw[['Open', 'High', 'Low', 'Close']].mul(factor, axis=0)
-        df['Close'] = raw['Adj Close']
-        df['Volume'] = raw['Volume']
-        df.columns = ['open', 'high', 'low', 'close', 'volume']
+        df = None
+        if source == 'auto':
+            key = get_api_key()
+            if key:
+                try:
+                    df = fetch_tiingo_eod(symbol, start, end, key)
+                except Exception:
+                    pass
+        if df is None or df.empty:
+            raw = yf.download(symbol, start=start, end=end, progress=False, auto_adjust=False)
+            if raw.empty:
+                raise ValueError(f'No stock bars returned for {symbol}')
+            if isinstance(raw.columns, pd.MultiIndex):
+                if 'Close' in raw.columns.get_level_values(0):
+                    raw.columns = raw.columns.get_level_values(0)
+                elif 'Close' in raw.columns.get_level_values(1):
+                    raw.columns = raw.columns.get_level_values(1)
+                else:
+                    raw.columns = raw.columns.get_level_values(0)
+            factor = raw['Adj Close'] / raw['Close']
+            df = raw[['Open', 'High', 'Low', 'Close']].mul(factor, axis=0)
+            df['Close'] = raw['Adj Close']
+            df['Volume'] = raw['Volume']
+            df.columns = ['open', 'high', 'low', 'close', 'volume']
     df.index = pd.DatetimeIndex(df.index).tz_localize(None).normalize().tz_localize('UTC')
     df.index.name = 'timestamp'
     df = df.sort_index()
